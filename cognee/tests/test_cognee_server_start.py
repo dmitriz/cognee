@@ -5,14 +5,14 @@ import os
 import signal
 import requests
 import sys
+from security import safe_command
 
 
 class TestCogneeServerStart(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Start the Cognee server - just check if the server can start without errors
-        cls.server_process = subprocess.Popen(
-            [
+        cls.server_process = safe_command.run(subprocess.Popen, [
                 sys.executable,
                 "-m",
                 "uvicorn",
