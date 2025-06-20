@@ -6,10 +6,10 @@ from typing import List, Optional
 import subprocess
 from cognee.modules.data.methods import get_dataset
 from cognee.shared.logging_utils import get_logger
-import requests
 
 from cognee.modules.users.models import User
 from cognee.modules.users.methods import get_authenticated_user
+from security import safe_requests
 
 logger = get_logger()
 
@@ -49,7 +49,7 @@ def get_add_router() -> APIRouter:
                     )
                 else:
                     # Fetch and store the data from other types of URL using curl
-                    response = requests.get(data)
+                    response = safe_requests.get(data)
                     response.raise_for_status()
 
                     file_data = await response.content()

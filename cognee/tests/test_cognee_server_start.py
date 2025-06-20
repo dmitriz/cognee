@@ -3,8 +3,8 @@ import subprocess
 import time
 import os
 import signal
-import requests
 import sys
+from security import safe_requests
 
 
 class TestCogneeServerStart(unittest.TestCase):
@@ -45,11 +45,11 @@ class TestCogneeServerStart(unittest.TestCase):
     def test_server_is_running(self):
         """Test that the server is running and can accept connections."""
         # Test health endpoint
-        health_response = requests.get("http://localhost:8000/health", timeout=10)
+        health_response = safe_requests.get("http://localhost:8000/health", timeout=10)
         self.assertEqual(health_response.status_code, 200)
 
         # Test root endpoint
-        root_response = requests.get("http://localhost:8000/", timeout=10)
+        root_response = safe_requests.get("http://localhost:8000/", timeout=10)
         self.assertEqual(root_response.status_code, 200)
         self.assertIn("message", root_response.json())
         self.assertEqual(root_response.json()["message"], "Hello, World, I am alive!")

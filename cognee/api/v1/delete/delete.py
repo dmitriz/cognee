@@ -14,6 +14,7 @@ from cognee.infrastructure.engine import DataPoint
 from cognee.modules.graph.utils.convert_node_to_data_point import get_all_subclasses
 from .exceptions import DocumentNotFoundError, DatasetNotFoundError, DocumentSubgraphNotFoundError
 from cognee.shared.logging_utils import get_logger
+from security import safe_requests
 
 logger = get_logger()
 
@@ -44,9 +45,8 @@ async def delete(
                 content_hash = classified_data.get_metadata()["content_hash"]
                 return await delete_single_document(content_hash, dataset_name, mode)
         elif data.startswith("http"):  # It's a URL
-            import requests
 
-            response = requests.get(data)
+            response = safe_requests.get(data)
             response.raise_for_status()
             file_data = BytesIO(response.content)
             classified_data = classify(file_data)

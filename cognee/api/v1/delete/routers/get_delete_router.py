@@ -4,9 +4,9 @@ from fastapi import APIRouter
 from typing import List, Optional
 import subprocess
 from cognee.shared.logging_utils import get_logger
-import requests
 from cognee.modules.users.models import User
 from cognee.modules.users.methods import get_authenticated_user
+from security import safe_requests
 
 logger = get_logger()
 
@@ -50,7 +50,7 @@ def get_delete_router() -> APIRouter:
                         )
                     else:
                         # Fetch and delete the data from other types of URL
-                        response = requests.get(file.filename)
+                        response = safe_requests.get(file.filename)
                         response.raise_for_status()
                         file_data = response.content
                         result = await cognee_delete(

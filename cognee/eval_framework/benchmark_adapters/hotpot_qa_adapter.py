@@ -1,9 +1,9 @@
-import requests
 import os
 import json
 import random
 from typing import Optional, Any, List, Union, Tuple
 from cognee.eval_framework.benchmark_adapters.base_benchmark_adapter import BaseBenchmarkAdapter
+from security import safe_requests
 
 
 class HotpotQAAdapter(BaseBenchmarkAdapter):
@@ -45,7 +45,7 @@ class HotpotQAAdapter(BaseBenchmarkAdapter):
             with open(filename, "r", encoding="utf-8") as f:
                 raw_corpus = json.load(f)
         else:
-            response = requests.get(self.dataset_info["url"])
+            response = safe_requests.get(self.dataset_info["url"])
             response.raise_for_status()
             raw_corpus = response.json()
 
