@@ -46,7 +46,7 @@ async def delete(
         elif data.startswith("http"):  # It's a URL
             import requests
 
-            response = requests.get(data)
+            response = requests.get(data, timeout=60)
             response.raise_for_status()
             file_data = BytesIO(response.content)
             classified_data = classify(file_data)

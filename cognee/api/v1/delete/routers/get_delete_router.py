@@ -50,7 +50,7 @@ def get_delete_router() -> APIRouter:
                         )
                     else:
                         # Fetch and delete the data from other types of URL
-                        response = requests.get(file.filename)
+                        response = requests.get(file.filename, timeout=60)
                         response.raise_for_status()
                         file_data = response.content
                         result = await cognee_delete(

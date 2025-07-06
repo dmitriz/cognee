@@ -45,7 +45,7 @@ class HotpotQAAdapter(BaseBenchmarkAdapter):
             with open(filename, "r", encoding="utf-8") as f:
                 raw_corpus = json.load(f)
         else:
-            response = requests.get(self.dataset_info["url"])
+            response = requests.get(self.dataset_info["url"], timeout=60)
             response.raise_for_status()
             raw_corpus = response.json()
 

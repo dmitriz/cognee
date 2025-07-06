@@ -49,7 +49,7 @@ def get_add_router() -> APIRouter:
                     )
                 else:
                     # Fetch and store the data from other types of URL using curl
-                    response = requests.get(data)
+                    response = requests.get(data, timeout=60)
                     response.raise_for_status()
 
                     file_data = await response.content()

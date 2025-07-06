@@ -96,7 +96,7 @@ def send_telemetry(event_name: str, user_id, additional_properties: dict = {}):
         },
     }
 
-    response = requests.post(proxy_url, json=payload)
+    response = requests.post(proxy_url, json=payload, timeout=60)
 
     if response.status_code != 200:
         print(f"Error sending telemetry through proxy: {response.status_code}")
