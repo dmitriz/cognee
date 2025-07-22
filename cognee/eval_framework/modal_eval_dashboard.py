@@ -38,7 +38,7 @@ def run():
         "--server.enableCORS=false "
         "--server.enableXsrfProtection=false"
     )
-    subprocess.Popen(cmd, shell=True)
+    subprocess.Popen(cmd, shell=False)
 
 
 # ----------------------------------------------------------------------------
