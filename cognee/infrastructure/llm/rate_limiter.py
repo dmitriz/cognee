@@ -44,7 +44,6 @@ Usage:
 
 import time
 import asyncio
-import random
 from functools import wraps
 from limits import RateLimitItemPerMinute, storage
 from limits.strategies import MovingWindowRateLimiter
@@ -55,6 +54,7 @@ import logging
 import functools
 import openai
 import os
+import secrets
 
 logger = get_logger()
 
@@ -362,7 +362,7 @@ def calculate_backoff(
     """
     backoff = initial_backoff * (backoff_factor**attempt)
     jitter_amount = backoff * jitter
-    return backoff + random.uniform(-jitter_amount, jitter_amount)
+    return backoff + secrets.SystemRandom().uniform(-jitter_amount, jitter_amount)
 
 
 def sleep_and_retry_sync(

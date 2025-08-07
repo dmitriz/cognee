@@ -1,13 +1,13 @@
 import asyncio
-import random
 import time
 from typing import List
 from uuid import NAMESPACE_OID, uuid5
 
 from cognee.infrastructure.engine import DataPoint
 from cognee.modules.graph.utils import get_graph_from_model
+import secrets
 
-random.seed(1500)
+secrets.SystemRandom().seed(1500)
 
 
 class Repository(DataPoint):
@@ -71,7 +71,7 @@ async def test_circular_reference_extraction():
                     part_of=repo,
                     depends_on=[],
                 )
-                for random_id in [random.randint(0, 1499) for _ in range(random.randint(0, 5))]
+                for random_id in [secrets.SystemRandom().randint(0, 1499) for _ in range(secrets.SystemRandom().randint(0, 5))]
             ],
         )
         for file_index in range(1500)
@@ -84,7 +84,7 @@ async def test_circular_reference_extraction():
                     part_of=code_file,
                     source_code=f"Part {part_index}",
                 )
-                for part_index in range(random.randint(1, 20))
+                for part_index in range(secrets.SystemRandom().randint(1, 20))
             ]
         )
 
