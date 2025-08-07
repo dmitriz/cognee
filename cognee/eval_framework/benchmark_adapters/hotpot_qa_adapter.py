@@ -1,9 +1,9 @@
 import requests
 import os
 import json
-import random
 from typing import Optional, Any, List, Union, Tuple
 from cognee.eval_framework.benchmark_adapters.base_benchmark_adapter import BaseBenchmarkAdapter
+import secrets
 
 
 class HotpotQAAdapter(BaseBenchmarkAdapter):
@@ -89,8 +89,8 @@ class HotpotQAAdapter(BaseBenchmarkAdapter):
             raw_corpus = self._filter_instances(raw_corpus, instance_filter, id_key="_id")
 
         if limit is not None and 0 < limit < len(raw_corpus):
-            random.seed(seed)
-            raw_corpus = random.sample(raw_corpus, limit)
+            secrets.SystemRandom().seed(seed)
+            raw_corpus = secrets.SystemRandom().sample(raw_corpus, limit)
 
         corpus_list = []
         question_answer_pairs = []

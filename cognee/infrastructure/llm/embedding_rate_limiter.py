@@ -4,9 +4,9 @@ import functools
 import os
 import time
 import asyncio
-import random
 from cognee.shared.logging_utils import get_logger
 from cognee.infrastructure.llm.config import get_llm_config
+import secrets
 
 
 logger = get_logger()
@@ -406,7 +406,7 @@ def embedding_sleep_and_retry_sync(max_retries=5, base_backoff=1.0, jitter=0.5):
                     if is_rate_limit and retries < max_retries:
                         # Calculate backoff with jitter
                         backoff = (
-                            base_backoff * (2**retries) * (1 + random.uniform(-jitter, jitter))
+                            base_backoff * (2**retries) * (1 + secrets.SystemRandom().uniform(-jitter, jitter))
                         )
 
                         logger.warning(
@@ -523,7 +523,7 @@ def embedding_sleep_and_retry_async(max_retries=5, base_backoff=1.0, jitter=0.5)
                     if is_rate_limit and retries < max_retries:
                         # Calculate backoff with jitter
                         backoff = (
-                            base_backoff * (2**retries) * (1 + random.uniform(-jitter, jitter))
+                            base_backoff * (2**retries) * (1 + secrets.SystemRandom().uniform(-jitter, jitter))
                         )
 
                         logger.warning(
